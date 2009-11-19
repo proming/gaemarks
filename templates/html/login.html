@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<title>登录GAEMarks</title>		
+		<link href="../../stylesheets/styles.css" type="text/css" media="screen" rel="stylesheet">		
+    <script type="text/javascript" src="/jscripts/webtoolkit.sha1.js"></script>
+    <script type="text/javascript" src="/jscripts/gaemarks.js"></script>
+		<style type="text/css">
+		  img, div { behavior: url(iepngfix.htc) }
+		</style>
+		
+		<script type="text/javascript">
+		/*
+		if (document.all && document.styleSheets && document.styleSheets[0] &&
+		document.styleSheets[0].addRule)
+		{
+		
+		document.styleSheets[0].addRule('*', 'behavior: url(iepngfix.htc)');
+		}
+		*/
+		</script>	
+	</head><body id="login">
+		<div id="wrappertop"></div>
+			<div id="wrapper">
+					<div id="content">
+						<div id="header">
+							<h1><a href=""><img src="../../images/logo.png" alt="FreelanceSuite"></a></h1>
+						</div>
+						<div id="darkbanner" class="banner320">
+							<h2>登录</h2>
+						</div>
+						<div id="darkbannerwrap">
+						</div>
+						<form name="form1" method="post" action="/login.action" onsubmit="return checkLoginUser();">
+						 <fieldset class="form">
+						 <p class="error" style="display:none;">
+              <img width="16px" height="16px" src="../../images/error.png"/>
+                 no
+             </p>
+              <p>
+								<label for="id_userId">用户名:</label>
+								<input name="userId" id="id_userId" type="text">
+							</p>
+							<p>
+								<label for="id_passwd">密码:</label>
+								<input name="passwd" id="id_passwd" type="password">
+							</p>
+							<button type="submit" class="positive" name="Submit">
+								<img src="../../images/key.png" alt="Announcement">登录</button>
+								<ul id="forgottenpassword">
+								<li class="boldtext">|</li>
+								<li><a href="/regUser">注册</a></li>
+								<li class="boldtext">|</li>
+								<li><a href="/forgotten">忘记密码?</a></li>
+							</ul>
+             </fieldset>
+						</form></div>
+				</div>   
+
+</body></html>

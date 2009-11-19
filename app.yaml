@@ -1,0 +1,27 @@
+application: gaemarks
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+
+- url: /favicon.ico
+  static_files: images/favicon.ico
+  upload: images/favicon.ico
+
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt
+
+- url: /images
+  static_dir: images
+
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /jscripts
+  static_dir: jscripts
+
+- url: /.*
+  script: main.py
+
