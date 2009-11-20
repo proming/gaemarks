@@ -1,60 +1,51 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html><head>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<title>登录GAEMarks</title>		
-		<link href="../../stylesheets/styles.css" type="text/css" media="screen" rel="stylesheet">		
-    <script type="text/javascript" src="/jscripts/webtoolkit.sha1.js"></script>
-    <script type="text/javascript" src="/jscripts/gaemarks.js"></script>
-		<style type="text/css">
-		  img, div { behavior: url(iepngfix.htc) }
-		</style>
-		
-		<script type="text/javascript">
-		/*
-		if (document.all && document.styleSheets && document.styleSheets[0] &&
-		document.styleSheets[0].addRule)
-		{
-		
-		document.styleSheets[0].addRule('*', 'behavior: url(iepngfix.htc)');
-		}
-		*/
-		</script>	
-	</head><body id="login">
-		<div id="wrappertop"></div>
-			<div id="wrapper">
-					<div id="content">
-						<div id="header">
-							<h1><a href=""><img src="../../images/logo.png" alt="FreelanceSuite"></a></h1>
-						</div>
-						<div id="darkbanner" class="banner320">
-							<h2>登录</h2>
-						</div>
-						<div id="darkbannerwrap">
-						</div>
-						<form name="form1" method="post" action="/login.action" onsubmit="return checkLoginUser();">
-						 <fieldset class="form">
-						 <p class="error" style="display:none;">
-              <img width="16px" height="16px" src="../../images/error.png"/>
-                 no
-             </p>
-              <p>
-								<label for="id_userId">用户名:</label>
-								<input name="userId" id="id_userId" type="text">
-							</p>
-							<p>
-								<label for="id_passwd">密码:</label>
-								<input name="passwd" id="id_passwd" type="password">
-							</p>
-							<button type="submit" class="positive" name="Submit">
-								<img src="../../images/key.png" alt="Announcement">登录</button>
-								<ul id="forgottenpassword">
-								<li class="boldtext">|</li>
-								<li><a href="/regUser">注册</a></li>
-								<li class="boldtext">|</li>
-								<li><a href="/forgotten">忘记密码?</a></li>
-							</ul>
-             </fieldset>
-						</form></div>
-				</div>   
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <title>GAEMarks - 书签同步服务</title>
+  <link href="../../stylesheets/stylesheet.css" media="screen" rel="stylesheet" type="text/css">
+
+  </head><body>
+    <div id="main">
+      <div id="header">
+        <div class="site">
+          <div class="logo">
+            <a href="http://gaemarks.appspot.com/"><img src="../../images/logov3.png" alt="GAEMarks"></a>
+          </div>
+          
+          
+        </div>
+      </div>
+
+      
+      <div class="site">
+        <div id="login" class="standard_form">
+          <form action="/session" method="post">
+            <input name="return_to" value="" type="hidden">
+            <h1>登录 <a href="http://github.com/plans">(注册)</a></h1>
+            <label for="login">
+              用户名<br>
+              <input class="text" id="login_field" name="login" style="width: 25em;" tabindex="1" value="proming" type="text">
+            </label>
+            <label for="password">
+              密码 <a href="https://github.com/sessions/forgot_password">(忘记密码)</a>
+              <br>
+              <input class="text" id="password" name="password" style="width: 25em;" tabindex="2" value="" type="password">
+            </label>
+            <label>
+              <input name="commit" value="登录" type="submit">
+            </label>
+          </form>  
+        </div>
+      </div>
+    </div>
+
+    <div id="footer">
+      <img title="Longming Fu" alt="Longming Fu" src="../../images/author_logo.png">
+      <div class="inner">
+        <span id="_rrt" title="0.01179s from fe2.rs.github.com">GAEMarks</span>
+              is <a href="http://flm.appspot.com/">proming</a> ©2009 | <a href="http://gaemarks.appspot.com/site/terms">Terms of Service</a> | <a href="http://gaemarks.appspot.com/site/privacy">Privacy Policy</a>
+      </div>
+    </div>
 
 </body></html>

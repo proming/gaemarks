@@ -49,7 +49,7 @@ blockquote, q {
 /* HTML, BODY, GENERAL SETUP */
 
 html { 
-	background: #63bad8 url(../images/bg.jpg) 50% 0px repeat-x;  
+	background: #63bad8  50% 0px repeat-x;  
 	text-align: center; 
 }
 body { 
