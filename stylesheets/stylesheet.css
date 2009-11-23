@@ -93,6 +93,10 @@ text-decoration:none;
 color:#000000;
 }
 
+#header .userbox .avatarname a.logina{
+color:#4183C4;
+}
+
 ul.usernav {
 display:inline;
 margin:0;
@@ -109,6 +113,13 @@ margin:0;
 padding:0 0 0 15px;
 }
 
+.error_box {
+background:#FFEBE8 none repeat scroll 0 50%;
+border:1px solid #DD3C10;
+font-weight:bold;
+padding:1em;
+}
+
 .site {
 margin:0 auto;
 padding:0 15px;
@@ -116,8 +127,33 @@ text-align:left;
 width:920px;
 }
 
+.topsearch {
+clear:right;
+float:right;
+margin-top:10px;
+width:500px;
+}
+
+.topsearch ul.nav {
+float:right;
+margin:1px 0 0;
+white-space:nowrap;
+}
+
+ul.nav li {
+display:inline;
+font-size:12px;
+list-style-type:none;
+margin:0 15px 0 0;
+}
+
+#header ul.nav li a {
+color:#4183C4;
+font-weight:bold;
+}
+
 #login {
-width:32em;
+width:31em;
 }
 
 .standard_form {
@@ -136,6 +172,7 @@ width:32px;
 .standard_form form input.text, .standard_form form textarea {
 border:1px solid #888888;
 padding:5px;
+margin:0;
 }
 
 .standard_form form label, .standard_form form .label, label.standard {
@@ -143,6 +180,7 @@ color:#666666;
 display:block;
 font-size:110%;
 margin:1em 0 0;
+padding:0;
 }
 
 .standard_form h1 {

@@ -1,0 +1,27 @@
+{% extends "html/base.html" %}
+{% load humanize %}
+{% block head %}
+    <script type="text/javascript" src="/jscripts/webtoolkit.sha1.js"></script>
+    <script type="text/javascript" src="/jscripts/gaemarks.js"></script>
+{% endblock %}
+{% block content %}
+        <div id="login" class="standard_form">
+          <form id="form1" name="form1" action="/forgotPasswd.action" method="post" onsubmit="return forgotPasswd();">
+            <h1>找回密码 <a href="/login">(登录)</a></h1>
+            <div class="error_box" id="error_box" style="display:none;">Incorrect login or password.</div>
+            <label for="login">
+              用户名<br>
+              <input class="text" id="id_userId" name="userId" style="width: 25em;" tabindex="1" value="" type="text">
+            </label>
+            <label for="password">
+              邮箱 <a href="mailto:promingx@gmail.com">(联系处理)</a>
+              <br>
+              <input class="text" id="id_email" name="email" style="width: 25em;" tabindex="2" value="" type="text">
+            </label>
+            <label>
+              <input  tabindex="3" name="commit" value="登录" type="submit">
+            </label>
+          </form>  
+        </div>
+{% endblock %}
+

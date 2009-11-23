@@ -1,51 +1,27 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <title>GAEMarks - 书签同步服务</title>
-  <link href="../../stylesheets/stylesheet.css" media="screen" rel="stylesheet" type="text/css">
-
-  </head><body>
-    <div id="main">
-      <div id="header">
-        <div class="site">
-          <div class="logo">
-            <a href="http://gaemarks.appspot.com/"><img src="../../images/logov3.png" alt="GAEMarks"></a>
-          </div>
-          
-          
-        </div>
-      </div>
-
-      
-      <div class="site">
+{% extends "html/base.html" %}
+{% load humanize %}
+{% block head %}
+  <script type="text/javascript" src="/jscripts/webtoolkit.sha1.js"></script>
+  <script type="text/javascript" src="/jscripts/gaemarks.js"></script>
+{% endblock %}
+{% block content %}
         <div id="login" class="standard_form">
-          <form action="/session" method="post">
-            <input name="return_to" value="" type="hidden">
-            <h1>登录 <a href="http://github.com/plans">(注册)</a></h1>
+          <form id="form1" name="form1" action="/login.action" method="post" onsubmit="return loginUser();">
+            <h1>登录 <a href="/regUser">(注册)</a></h1>
+            <div class="error_box" id="error_box" style="display:none;">None.</div>
             <label for="login">
               用户名<br>
-              <input class="text" id="login_field" name="login" style="width: 25em;" tabindex="1" value="proming" type="text">
+              <input class="text" id="id_userId" name="userId" style="width: 25em;" tabindex="1" value="" type="text">
             </label>
             <label for="password">
-              密码 <a href="https://github.com/sessions/forgot_password">(忘记密码)</a>
+              密码 <a href="/forgotPasswd">(忘记密码)</a>
               <br>
-              <input class="text" id="password" name="password" style="width: 25em;" tabindex="2" value="" type="password">
+              <input class="text" id="id_passwd" name="passwd" style="width: 25em;" tabindex="2" value="" type="password">
             </label>
             <label>
-              <input name="commit" value="登录" type="submit">
+              <input  tabindex="3" name="commit" value="登录" type="submit">
             </label>
           </form>  
         </div>
-      </div>
-    </div>
+{% endblock %}
 
-    <div id="footer">
-      <img title="Longming Fu" alt="Longming Fu" src="../../images/author_logo.png">
-      <div class="inner">
-        <span id="_rrt" title="0.01179s from fe2.rs.github.com">GAEMarks</span>
-              is <a href="http://flm.appspot.com/">proming</a> ©2009 | <a href="http://gaemarks.appspot.com/site/terms">Terms of Service</a> | <a href="http://gaemarks.appspot.com/site/privacy">Privacy Policy</a>
-      </div>
-    </div>
-
-</body></html>

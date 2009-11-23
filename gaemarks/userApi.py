@@ -6,65 +6,121 @@ from google.appengine.api import users
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader, Context
 from models import UserInfo
-from forms import LoginForm, UserInfoForm, UserAuthForm
-import tools
-import json
+from forms import LoginForm, UserInfoForm, UserAuthForm, ForgotRequestForm, PasswdResetForm
+import gaemarks.tools as tools
+from django.utils import simplejson as json
 
 def userLogin(request):
   reponse = dict()
-  reponse['status'] = 0
+  reponse.update(status = 0, msg = '用户名或密码错误，请重新录入！')
   if request.method == 'POST':
     form = LoginForm(request.POST)
     if form.is_valid():
       userId = form.cleaned_data['userId']
       passwd = form.cleaned_data['passwd']
       if authService(userId, passwd):
-        authCode = tools.getAuthCode(userId, tools.getUserSid(userId))
-        tools.addToSession(userId + ":" + tools.getUserSid(userId), authCode)
-        reponse['status'] = 1
-        reponse['authCode'] = authCode
-      else:
-        reponse['msg'] = '用户名或密码错误，请重新录入！'
-    else:
-        reponse['msg'] = '用户名或密码错误，请重新录入！'
+        authCode = tools.getAuthCode(userId)
+        tools.addSession(userId, authCode)
+        reponse.update(status = 1, userLoginId= userId, userLoginAuth=authCode, msg='登录成功！')
+        
+  return HttpResponse(json.dumps(reponse), mimetype='application/json')
 
-  return HttpResponse(json.dumps(reponse))
-  
-def checkUserAuth(request):
-  if request.method == 'POST':
-    form = UserAuthForm(request.POST)
-    if form.is_valid():
-      userId = form.cleaned_data['userId']
-      authCode = form.cleaned_data['authCode']
-      if tools.getUserAuth(userId, tools.getUserSid(userId)) == authCode:
-        return True;
-  return False;
-
-def regUser(request):  
+def regUser(request):
+  reponse = dict()
+  reponse.update(status = 0, msg = '录入信息错误，请重新录入！')
+  msg = ''
   if request.method == 'POST':
     form = UserInfoForm(request.POST)
     if form.is_valid():
       if checkUserId(form.cleaned_data['userId']):
-        context.loginErr='block'
-        context.errMsg = '用户名已存在！'
+        msg = '用户名已存在!'
       elif checkEmail(form.cleaned_data['email']):
-        context.loginErr='block'
-        context.errMsg = '邮箱已存在！'
+        msg = '邮箱已存在!'
       else:
         userInfo = UserInfo()
         userInfo.userId = form.cleaned_data['userId']
         userInfo.email = form.cleaned_data['email']
         userInfo.passwd = form.cleaned_data['passwd']
         userInfo.put();
+        msg = '注册成功!'
+        reponse.update(status = 1)
+  if msg != '':
+    reponse.update(msg = msg)
+  return HttpResponse(json.dumps(reponse),mimetype='application/json')
+  
+def forgotRequest(request):
+  reponse = dict()
+  reponse.update(status = 0, msg = '用户名或邮箱错误，请重新录入！')
+  if request.method == 'POST':
+    form = ForgotRequestForm(request.POST)
+    if form.is_valid():
+      userId = form.cleaned_data['userId']
+      email = form.cleaned_data['email']
+      if checkIdAndEmail(userId, email):
+        changeFlag = tools.sendEmail(userId, email)
+        setChangeFlag(userId, changeFlag)
+        reponse.update(status = 1, msg='邮件已发送到您的邮箱，请及时重新设置密码！')
         
-        return HttpResponseRedirect('/login')
-    else:
-      context.loginErr='block'
-      context.errMsg = '录入信息错误，请重新录入！'
+  return HttpResponse(json.dumps(reponse), mimetype='application/json')
+
+def resetPasswd(request):
+  reponse = dict()
+  reponse.update(status = 0, msg = '录入信息错误，请重新录入！')
+  msg = ''
+  if request.method == 'POST':
+    form = UserInfoForm(request.POST)
+    if form.is_valid():
+      if not checkIdAndEmail(form.cleaned_data['userId'], form.cleaned_data['email']):
+        msg = '用户名或邮箱错误，请重新录入！'
+      else:
+        userInfo = getUserByUserId(form.cleaned_data['userId'])
+        userInfo.passwd = form.cleaned_data['passwd']
+        userInfo.changeFlag = ''
+        userInfo.put();
+        msg = '密码重设成功!'
+        reponse.update(status = 1)
+  if msg != '':
+    reponse.update(msg = msg)
+  return HttpResponse(json.dumps(reponse),mimetype='application/json')
+
+def checkUserAuth(request):
+  formPost = UserAuthForm()
+  formCookie = UserAuthForm()
+  if request.POST:
+    formPost = UserAuthForm(request.POST)
+  if request.COOKIES:
+    formCookie = UserAuthForm(request.COOKIES)
   
-  template = loader.get_template('html/regUser.html')
-  return HttpResponse(template.render(context))
-  
+  if formCookie.is_valid():
+    userLoginId = formCookie.cleaned_data['userLoginId']
+    userLoginAuth = formCookie.cleaned_data['userLoginAuth']
+    if tools.getSession(userLoginId) == userLoginAuth:
+      tools.addSession(userLoginId, userLoginAuth)
+      return True;
+      
+  if formPost.is_valid():
+    userLoginId = formPost.cleaned_data['userLoginId']
+    userLoginAuth = formPost.cleaned_data['userLoginAuth']
+    if tools.getSession(userLoginId) == userLoginAuth:
+      tools.addSession(userLoginId, userLoginAuth)
+      return True;
+   
+  return False;
+
+def delUserAuth(request):
+  form = UserAuthForm();
+  if request.method == 'POST':
+    form = UserAuthForm(request.POST)
+  else:
+    form = UserAuthForm(request.COOKIES)
+  if form.is_valid():
+    userLoginId = form.cleaned_data['userLoginId']
+    if tools.getSession(userLoginId):
+      tools.delSession(userLoginId)
+      return True;
+      
+  return False;
+
 def authService(userId, passwd):
   query = UserInfo.all()
   query.filter('userId = ', userId).filter('passwd = ', passwd)
@@ -89,3 +145,35 @@ def checkEmail(email):
   else:
     return True;
 
+def checkIdAndEmail(userId, email):
+  query = UserInfo.all()
+  query.filter('userId = ', userId).filter('email = ', email)
+  if query.count() == 0:
+    return False;
+  else:
+    return True;
+    
+def setChangeFlag(userId, changeFlag):
+  query = UserInfo.all()
+  userInfos = query.filter('userId = ', userId)
+  for userInfo in userInfos:
+    userInfo.changeFlag = changeFlag
+    userInfo.put()
+
+def getUserByChangeFlag(changeFlag):
+  query = UserInfo.all()
+  userInfos = query.filter('changeFlag = ', changeFlag)
+  user = None
+  for userInfo in userInfos:
+    user = userInfo
+    
+  return user
+
+def getUserByUserId(userId):
+  query = UserInfo.all()
+  userInfos = query.filter('userId = ', userId)
+  user = None
+  for userInfo in userInfos:
+    user = userInfo
+    
+  return user

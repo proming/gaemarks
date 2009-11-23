@@ -6,9 +6,14 @@
 {% endblock %}
 {% block content %}
         <div id="login" class="standard_form">
-          <form id="form1" name="form1" method="post" action="/regUser.action" onsubmit="return modifyUser(0);">
-            <h1>注册 <a href="/login">(登录)</a></h1>
-            <div class="error_box" id="error_box" style="display:none;">Incorrect login or password.</div>
+          <form id="form1" name="form1" method="post" action="/resetPasswd.action" onsubmit="return modifyUser(1);">
+            <h1>重设密码 <a href="/login">(登录)</a></h1>
+            {% if not user %}
+            <div class="error_box" id="error_box" style="display:block;">重设密码验证码不正确.</div>
+            {% else %}
+            <div class="error_box" id="error_box" style="display:none;">None.</div>
+            {% endif %}
+            {% if user %}
             <label for="userId">
               用户名<br>
               <input class="text" id="id_userId" name="userId" style="width: 25em;" tabindex="1" value="" type="text">
@@ -28,8 +33,9 @@
               <input class="text" id="id_repasswd" name="repasswd" style="width: 25em;" tabindex="4" value="" type="password">
             </label>
             <label>
-              <input  tabindex="5" name="commit" value="注册" type="submit">
+              <input  tabindex="5" name="commit" value="确认" type="submit">
             </label>
+            {% endif %}
           </form>  
         </div>
 {% endblock %}

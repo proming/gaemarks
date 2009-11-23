@@ -1,0 +1,62 @@
+{% extends "html/base.html" %}
+{% load humanize %}
+{% block head %}
+  <script type="text/javascript" src="/jscripts/gaemarks.js"></script>
+  <link href="../../stylesheets/infostyle.css" media="screen" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block content %}
+        <div id="content" class="standard_content">
+          <div class="profileside">
+            <div class="avatar"><img width="120" height="120" src="{{userLoginImg120}}"></div>
+              <ul id="profile_act">
+                <li class="pm"><a href="/userinfo">编辑个人信息</a></li>
+              </ul>
+          </div>
+          {% if user %}
+          <div class="profilecontent">
+            <div class="itemtitle">
+              <h1>{{user.userId}}</h1>
+              <ul>
+              <li>(UID: {{userUID}})</li>
+              </ul>
+            </div>
+            <hr class="dashline"/>
+            <div class="profilecard">
+              <dl>
+                <dt>用户名</dt>
+                <dd> {{user.userId}}</dd>
+              </dl>
+
+              <dl>
+                <dt>邮箱</dt>
+                <dd><a class="email" href="mailto:{{user.email}}"> {{user.email}}</a></dd>
+              </dl>
+
+              <dl>
+                <dt>注册时间</dt>
+                <dd> {{user.regtime|naturalday}}</dd>
+              </dl>
+              
+              <dl>
+                <dt>备注录</dt>
+                <dd> {{user.remark}}</dd>
+              </dl>
+            </div><!-- /.profilecard -->
+            <hr class="dashline"/>
+            <h3 class="blocktitle">更新信息</h3>
+            <div class="updatecard">
+              <dl>
+                <dt>更新次数</dt>
+                <dd class="updatecount"> {{user.updateCount}}</dd>
+              </dl>
+
+              <dl>
+                <dt class="updatetime">最近一次更新时间</dt>
+                <dd> {{user.updateTime|naturalday}}</dd>
+              </dl>
+            </div><!-- /.updatecard -->
+          </div>
+          {% endif %}
+        </div>
+{% endblock %}
+

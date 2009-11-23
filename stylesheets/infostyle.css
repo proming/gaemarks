@@ -1,0 +1,177 @@
+.standard_content {
+background-color:#FFFFF7;
+border:1px solid #DDDDDD;
+min-height:200px;
+overflow:hidden;
+margin:-10px auto 0;
+padding:0;
+}
+
+.profileside {
+margin:2px;
+min-height:100px;
+padding:0;
+width:180px;
+float:left;
+}
+
+.profilecontent {
+/*background-color:#FFFFFF;*/
+margin:2px;
+min-height:100px;
+padding:20px 0px;
+width:720px;
+float:right;
+}
+
+.profileside .avatar {
+margin:25px 0;
+text-align:center;
+}
+
+.profileside ul {
+line-height:1.6em;
+margin:5px 30px;
+overflow:hidden;
+padding:0;
+word-wrap:break-word;
+}
+
+.profileside li {
+margin:5px 0;
+text-align:center;
+}
+
+.profileside li.gravatar {
+margin:5px 0;
+text-align:left;
+word-wrap:break-word;
+}
+
+.profileside li.usingemail {
+color:#999999;
+margin:5px 0;
+text-align:left;
+word-wrap:break-word;
+font-size:12px;
+}
+
+.profileside li button {
+color:#990000;
+margin:15px 0;
+font-size:14px;
+}
+
+.standard_content ul li {
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+}
+
+.itemtitle {
+clear:both;
+line-height:23px;
+margin-bottom:10px;
+overflow:hidden;
+}
+
+.profilecontent .itemtitle h1 {
+font-size:16px;
+font-weight:400;
+margin-bottom:10px;
+float:left;
+margin:0 20px 0 0;
+color:#4183C4;
+}
+
+.itemtitle ul {
+float:left;
+margin:0;
+padding:0;
+}
+
+.profilecontent dl dt {
+float:left;
+margin:0;
+width:115px;
+}
+
+.updateinfo dl dt {
+color:#333333;
+font-size:14px;
+margin:0 0 2px;
+line-height:2.3em;
+width:80px;
+}
+
+.updateinfo dl {
+margin-top:0;
+margin:15px 0;
+}
+
+.updateinfo dl dd input {
+color:#666666;
+font-size:14px;
+margin-right:5px;
+padding:5px;
+width:400px;
+}
+
+.updateinfo dl dd textarea {
+color:#666666;
+font-size:14px;
+margin-right:5px;
+padding:5px;
+width:400px;
+}
+
+.updateinfo dl dd input.submit {
+color:#666666;
+font-size:14px;
+margin-right:5px;
+padding:5px;
+width:80px;
+}
+
+.dashline {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent none repeat scroll 0 0;
+border:0 solid #EBE6C9;
+clear:both;
+margin:1em 0;
+border-bottom-width:1px;
+border-style:dashed;
+height:0;
+}
+
+.blocktitle {
+font-size:16px;
+font-weight:700;
+margin-bottom:0.5em;
+}
+
+.updatecard dl dt.updatetime {
+float:left;
+margin:0;
+width:115px;
+}
+
+.updatecard dl dd.updatecount {
+color:#000000;
+display:block;
+font-size:36px;
+text-indent:40px;
+font-weight:bold;
+height: 0.7em;
+line-height:1em;
+}
+
+.profileerr {
+background:#FFEBE8 none repeat scroll 0 50%;
+border:1px solid #DD3C10;
+font-weight:bold;
+width:474px;
+padding:10px;
+}

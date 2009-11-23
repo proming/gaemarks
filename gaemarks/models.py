@@ -9,6 +9,6 @@ class UserInfo(db.Model):
   changeFlag=db.StringProperty()
   updateCount=db.IntegerProperty(default=0)
   updateTime=db.DateTimeProperty()
-  remark=db.StringProperty()
+  remark=db.TextProperty(default='')
 
 

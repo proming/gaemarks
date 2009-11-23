@@ -1,0 +1,110 @@
+{% extends "html/base.html" %}
+{% load humanize %}
+{% block head %}
+  <script type="text/javascript" src="/jscripts/gaemarks.js"></script>
+  <script type="text/javascript" src="/jscripts/webtoolkit.sha1.js"></script>
+  <link href="/stylesheets/infostyle.css" media="screen" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block content %}
+        <div id="content" class="standard_content">
+          <div class="profileside">
+            <div class="avatar"><img width="120" height="120" src="{{userLoginImg120}}"></div>
+              <ul id="profile_act">
+                <li class="gravatar">更新个人照片<a href="http://gravatar.com/">gravatar.com</a></li>
+                <li class="usingemail">当前使用{{user.email}}</li>
+                <li class="deluser"><button  tabindex="10">注销此用户</button></li>
+              </ul>
+          </div>
+          {% if user %}
+          <div class="profilecontent updateinfo">
+            <div class="itemtitle">
+              <h1>{{user.userId}}</h1>
+              <ul>
+              <li>(UID: {{userUID}})</li>
+              </ul>
+            </div>
+            <hr class="dashline"/>
+            <div class="profilecard">
+              <h3 class="blocktitle">修改个人信息</h3>
+              <div class="profileerr" id="error_box" style="display:none;">None.</div>
+                <form id="form1" name="form1" action="/updateInfo.action" method="post" onsubmit="return modifyUser(3);">
+                <dl style="display:none;">
+                  <dt>用户名</dt>
+                  <dd>
+                    <input name="userId" tabindex="1" type="text" value="{{user.userId}}"/>
+                  </dd>
+                </dl>
+                <dl>
+                  <dt>邮箱</dt>
+                  <dd>
+                    <input name="email" tabindex="1" type="text" value="{{user.email}}"/>
+                  </dd>
+                </dl>
+                
+                <dl>
+                  <dt>备注录</dt>
+                  <dd>
+                    <textarea name="remark" tabindex="2">{{user.remark}}</textarea>
+                  </dd>
+                </dl>
+                
+                <dl>
+                  <dt>验证密码</dt>
+                  <dd>
+                    <input name="passwd" tabindex="4" type="password" value=""/>
+                  </dd>
+                </dl>
+                
+                <dl>
+                  <dt> </dt>
+                  <dd>
+                    <input class="submit" tabindex="5" name="ucommit" value="修改信息" type="submit">
+                  </dd>
+                </dl>
+              </form>
+            </div><!-- /.profilecard -->
+            <hr class="dashline"/>
+            <div class="profilecard">
+              <h3 class="blocktitle">修改密码</h3>
+              <div class="profileerr" id="error_box1" style="display:none;">None.</div>
+                <form id="infoform" name="infoform" action="/changePasswd.action" method="post" onsubmit="return modifyUser(2);">
+                <dl style="display:none;">
+                  <dt>用户名</dt>
+                  <dd>
+                    <input name="userId" tabindex="1" type="text" value="{{user.userId}}"/>
+                  </dd>
+                </dl>
+                <dl>
+                  <dt>旧密码</dt>
+                  <dd>
+                    <input name="passwd" tabindex="6" type="password" value=""/>
+                  </dd>
+                </dl>
+                
+                <dl>
+                  <dt>新密码</dt>
+                  <dd>
+                    <input name="repasswd" tabindex="7" type="password" value=""/>
+                  </dd>
+                </dl>
+                
+                <dl>
+                  <dt>确认密码</dt>
+                  <dd>
+                    <input name="nrepasswd" tabindex="8" type="password" value=""/>
+                  </dd>
+                </dl>
+                
+                <dl>
+                  <dt> </dt>
+                  <dd>
+                    <input tabindex="9" class="submit" name="icommit" value="修改密码" type="submit">
+                  </dd>
+                </dl>
+              </form>
+            </div><!-- /.profilecard -->
+          </div>
+          {% endif %}
+        </div>
+{% endblock %}
+

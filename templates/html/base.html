@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <title>GAEMarks - 书签同步服务</title>
+  <link href="../../stylesheets/stylesheet.css" media="screen" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="/jscripts/prototype.js"></script>
+  {% block head %}{% endblock %}
+  </head><body>
+    <div id="main">
+      <div id="header">
+        <div class="site">
+          <div class="logo">
+            <a href="http://gaemarks.appspot.com/"><img src="../../images/logov3.png" alt="GAEMarks"></a>
+          </div>
+          <div class="userbox">
+            <div class="inner">
+              {% if userLoginAuth %}
+              <div class="avatarname">
+                <a href="/userinfo">
+                <img width="20" height="20" src="{{userLoginImg}}" alt=""/>
+                </a>
+                <a class="name" href="/userinfo">{{userLoginId}}</a>
+              </div>
+              <ul class="usernav">
+                  <li><a href="/">控制中心</a></li>
+                  <li><a href="/userinfo">个人信息</a></li>
+                  <li><a href="/bookmark">书签管理</a></li>
+                <li><a href="/logout">登出</a></li>
+              </ul>
+              {% else %}
+              <div class="avatarname">
+                <a href="/login">
+                <img width="20" height="20" src="/images/userimg20.png" alt=""/>
+                </a>
+                <a class="logina" href="/login">登入</a>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="topsearch">
+            <ul class="nav">
+              <li>
+                <a href="/site/about">GAEMarks</a>
+              </li>
+              <li>
+                <a href="/site/guestbook">留言</a>
+              </li>
+              <li>
+                <a href="/site/help">帮助</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="site">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+
+    <div id="footer">
+      <img title="Longming Fu" alt="Longming Fu" src="../../images/author_logo.png">
+      <div class="inner">
+        <span id="_rrt" title="欢迎使用GAEMarks">GAEMarks</span>
+              is <a href="http://flm.appspot.com/">proming</a> ©2009 | <a href="mailto:promingx@gmail.com">Get in touch.</a>
+      </div>
+    </div>
+</body></html>
