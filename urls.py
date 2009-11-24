@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     #action
     (r'^login.action$','gaemarks.userApi.userLogin'),
     (r'^regUser.action$','gaemarks.userApi.regUser'),
+    (r'^delUser.action$','gaemarks.userApi.delUser'),
     (r'^forgotPasswd.action$','gaemarks.userApi.forgotRequest'),
     (r'^resetPasswd.action$','gaemarks.userApi.resetPasswd'),
     (r'^updateInfo.action$','gaemarks.infoApi.updateInfo'),

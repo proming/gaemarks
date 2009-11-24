@@ -41,12 +41,44 @@ def regUser(request):
         userInfo.userId = form.cleaned_data['userId']
         userInfo.email = form.cleaned_data['email']
         userInfo.passwd = form.cleaned_data['passwd']
-        userInfo.put();
+        userInfo.create();
         msg = '注册成功!'
         reponse.update(status = 1)
   if msg != '':
     reponse.update(msg = msg)
   return HttpResponse(json.dumps(reponse),mimetype='application/json')
+
+def delUser(request):
+  reponse = dict()
+  reponse.update(status = 0, msg = '请重新登录系统！')
+  formPost = UserAuthForm()
+  formCookie = UserAuthForm()
+  if request.POST:
+    formPost = UserAuthForm(request.POST)
+  if request.COOKIES:
+    formCookie = UserAuthForm(request.COOKIES)
+  
+  if formCookie.is_valid():
+    userLoginId = formCookie.cleaned_data['userLoginId']
+    userLoginAuth = formCookie.cleaned_data['userLoginAuth']
+    if tools.getSession(userLoginId) == userLoginAuth:
+      tools.delSession(userLoginId)
+      userInfo = getUserByUserId(userLoginId)
+      userInfo.delete()
+      reponse.update(status = 1, msg = '注销用户成功！')
+      return HttpResponse(json.dumps(reponse),mimetype='application/json');
+      
+  if formPost.is_valid():
+    userLoginId = formPost.cleaned_data['userLoginId']
+    userLoginAuth = formPost.cleaned_data['userLoginAuth']
+    if tools.getSession(userLoginId) == userLoginAuth:
+      tools.delSession(userLoginId)
+      userInfo = getUserByUserId(userLoginId)
+      userInfo.delete()
+      reponse.update(status = 1, msg = '注销用户成功！')
+      return HttpResponse(json.dumps(reponse),mimetype='application/json');
+      
+  return HttpResponse(json.dumps(reponse),mimetype='application/json');
   
 def forgotRequest(request):
   reponse = dict()
@@ -107,6 +139,26 @@ def checkUserAuth(request):
    
   return False;
 
+def getUserAuthContext(request):
+  context = None
+  
+  if checkUserAuth(request):
+    context = Context({
+    })
+    if request.method == 'POST':
+      form = UserAuthForm(request.POST)
+    else:
+      form = UserAuthForm(request.COOKIES)
+    if form.is_valid():
+      context.userLoginId = form.cleaned_data['userLoginId']
+      context.userLoginAuth = form.cleaned_data['userLoginAuth']
+    
+    context.user = getUserByUserId(context.userLoginId)
+    context.userLoginImg = tools.getUserImgUrl(context.user.email, 20)
+    context.userLoginImg120 = tools.getUserImgUrl(context.user.email, 120)
+    context.userUID = context.user.uid
+  return context;
+
 def delUserAuth(request):
   form = UserAuthForm();
   if request.method == 'POST':
@@ -162,18 +214,12 @@ def setChangeFlag(userId, changeFlag):
 
 def getUserByChangeFlag(changeFlag):
   query = UserInfo.all()
-  userInfos = query.filter('changeFlag = ', changeFlag)
-  user = None
-  for userInfo in userInfos:
-    user = userInfo
+  user = query.filter('changeFlag = ', changeFlag).get()
     
   return user
 
 def getUserByUserId(userId):
   query = UserInfo.all()
-  userInfos = query.filter('userId = ', userId)
-  user = None
-  for userInfo in userInfos:
-    user = userInfo
+  user = query.filter('userId = ', userId).get()
     
   return user

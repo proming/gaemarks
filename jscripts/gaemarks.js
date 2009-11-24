@@ -44,7 +44,7 @@ function loginUser(){
 }
 
 function loginUserResponse(response) {
-  var result = JSON.parse(response.responseText);
+  var result = response.responseText.evalJSON();
   if (result.status == 0) {
     $('error_box').style.display='block';
     $('error_box').innerHTML= result.msg;
@@ -148,7 +148,7 @@ function modifyUser(flag){
 }
 
 function regUserResponse(response) {
-  var result = JSON.parse(response.responseText);
+  var result = response.responseText.evalJSON();
   if (result.status == 0) {
     $('error_box').style.display='block';
     $('error_box').innerHTML= result.msg;
@@ -167,41 +167,9 @@ function gotoLogin() {
   window.location.replace("/login");
 }
 
-/**
- * 修改用户信息响应函数
- */
-function updateInfo(){
-  userId = document.form1.userId.value;
-  email = document.form1.email.value;
-  passwd = document.form1.passwd.value;
-  remark = document.form1.remark.value;
-  
-  errMsg = '';
-  if(!isUserId(userId)) errMsg += '用户名不正确，只允许20位的数字或字母组合!';
-  if(!isPasswd(passwd)) errMsg += '<br>密码不正确，只允许20位的数字或字母组合!';
-  if(!verifyAddress(email)) errMsg += '<br>邮箱格式不正确，例如: promingx@gmail.com!';
-  
-  if(errMsg != "") {
-    $('error_box').style.display='block';
-    $('error_box').innerHTML= errMsg;
-    return false;
-  }
-  
-  passwd = SHA1(passwd);
-  document.form1.passwd.value = passwd;
-  
-  var pars={
-    userId : userId,
-    email : email,
-    passwd : passwd,
-    remark: remark
-  };
-  ajaxRequest($('form1').action, pars, updateInfoResponse);
-  return false;
-}
 
 function updateInfoResponse(response) {
-  var result = JSON.parse(response.responseText);
+  var result = response.responseText.evalJSON();
   if (result.status == 0) {
     $('error_box').style.display='block';
     $('error_box').innerHTML= result.msg;
@@ -213,9 +181,8 @@ function updateInfoResponse(response) {
   }
 }
 
-
 function changePasswdResponse(response) {
-  var result = JSON.parse(response.responseText);
+  var result = response.responseText.evalJSON();
   if (result.status == 0) {
     $('error_box1').style.display='block';
     $('error_box1').innerHTML= result.msg;
@@ -230,16 +197,28 @@ function changePasswdResponse(response) {
   }
 }
 
-function updateInfoResponse(response) {
-  var result = JSON.parse(response.responseText);
+/**
+ * 删除用户响应函数
+ */
+function delUser(){
+  var answer = confirm("注销用户将删除所有信息，不能进行恢复。\n是否注销用户?");
+  if (answer){
+    var pars = {};
+    ajaxRequest('/delUser.action', pars, delUserResponse);
+  }
+  return false;
+}
+
+function delUserResponse(response) {
+  var result = response.responseText.evalJSON();
   if (result.status == 0) {
-    $('error_box').style.display='block';
-    $('error_box').innerHTML= result.msg;
-    document.form1.passwd.value = '';
+    $('delerr').style.display='block';
+    $('delerr').innerHTML= result.msg;
   } else {
-    $('error_box').style.display='block';
-    $('error_box').innerHTML= result.msg;
-    document.form1.passwd.value = '';
+    $('delerr').style.display='block';
+    $('delerr').innerHTML= result.msg;
+    alert(result.msg);
+    gotoLogin();
   }
 }
 
@@ -269,7 +248,7 @@ function forgotPasswd(){
 }
 
 function forgotPasswdResponse(response) {
-  var result = JSON.parse(response.responseText);
+  var result = response.responseText.evalJSON();
   if (result.status == 0) {
     $('error_box').style.display='block';
     $('error_box').innerHTML= result.msg;
@@ -284,7 +263,7 @@ function forgotPasswdResponse(response) {
  */
 function isUserId(s)
 {
-  var patrn=/^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){4,19}$/;
+  var patrn=/^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){1,19}$/;
   if (!patrn.exec(s)) return false;
   return true;
 }

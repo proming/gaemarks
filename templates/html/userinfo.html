@@ -12,8 +12,9 @@
               <ul id="profile_act">
                 <li class="gravatar">更新个人照片<a href="http://gravatar.com/">gravatar.com</a></li>
                 <li class="usingemail">当前使用{{user.email}}</li>
-                <li class="deluser"><button  tabindex="10">注销此用户</button></li>
+                <li class="deluser"><button  tabindex="10" onclick="return delUser();">注销此用户</button></li>
               </ul>
+              <div id="delerr" class="delerrr" style="display:none;">None</div>
           </div>
           {% if user %}
           <div class="profilecontent updateinfo">

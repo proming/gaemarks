@@ -46,6 +46,7 @@ def forgotRequestView(request):
 def resetPasswdView(request, key):
   context = Context({
   })
+  #检查验证码是否存在
   user = userApi.getUserByChangeFlag(key)
   context.user = user
   template = loader.get_template('html/resetPasswd.html')

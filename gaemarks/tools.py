@@ -38,7 +38,7 @@ def getSession(key):
   return memcache.get(key)
   
 def getUserImgUrl(email, size):
-  default = "http://gaemarks.appspot.com/image/userimg" + str(size) + ".png"
+  default = "http://gaemarks.appspot.com/images/userimg" + str(size) + ".png"
 
   # construct the url
   gravatar_url = "http://www.gravatar.com/avatar.php?"
